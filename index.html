@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impressão ZPL</title>
+    <script src="http://localhost:9100/BrowserPrint-2.0.1.min.js"></script>
+</head>
+<body>
+
+    <button onclick="printZPL()">Imprimir ZPL</button>
+
+    <script>
+        function printZPL() {
+            let printData = "^XA^FO50,50^A0N,50,50^FDTexto de Exemplo^FS^XZ";
+            let zebra = new ZebraBrowserPrint();
+
+            zebra.getDefaultPrinter((printer) => {
+                if (printer) {
+                    zebra.sendData(printer, printData, (response) => {
+                        console.log("Impressão enviada com sucesso!", response);
+                    }, (error) => {
+                        console.error("Erro ao enviar impressão", error);
+                    });
+                } else {
+                    console.error("Nenhuma impressora Zebra encontrada.");
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
